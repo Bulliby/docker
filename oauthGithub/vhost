@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+    ServerName oauthGithub
+    DocumentRoot "/var/www/oauthGithub"
+
+    ErrorLog "/var/log/apache2/oauthGithub-error_log"
+    CustomLog "/var/log/apache2/oauthGithub-access_log" common
+
+    Options Indexes FollowSymLinks
+
+	ErrorDocument 500 "Le serveur c'est crashe"
+	ErrorDocument 403 "Vous n'avez pas le droit d'acceder a ce fichier"
+	ErrorDocument 404 "La page demandee n'existe pas"
+	ErrorDocument 401 "Nop"
+
+    <Directory "/var/www/oauthGithub">
+        AllowOverride None
+        Order Allow,Deny
+        Allow from All
+    </Directory>
+
+</VirtualHost>
