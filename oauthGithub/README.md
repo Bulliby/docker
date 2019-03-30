@@ -1,4 +1,4 @@
-i# oauthGithub
+# oauthGithub
 
 This application permit to request an api token on fully fronted app without **expose** your CLIENT_ID and CLIENT_SECRET by acting like a **proxy**.
 
