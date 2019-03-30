@@ -7,11 +7,12 @@ WORKDIR /var/www
 RUN git clone https://github.com/Bulliby/oauthGithub.git
 WORKDIR /var/www/oauthGithub
 
-COPY vhost /etc/apache2/sites-enabled/000-default.conf
-
 RUN curl --silent --show-error https://getcomposer.org/installer | php
 
 RUN apt-get install -y zip unzip
 RUN php composer.phar install
+
+COPY vhost /etc/apache2/sites-enabled/000-default.conf
+RUN touch .env
 
 EXPOSE 80

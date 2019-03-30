@@ -1,6 +1,6 @@
 <VirtualHost *:80>
     ServerName oauthGithub
-    DocumentRoot "/var/www/oauthGithub"
+    DocumentRoot "/var/www/oauthGithub/web"
 
     ErrorLog "/var/log/apache2/oauthGithub-error_log"
     CustomLog "/var/log/apache2/oauthGithub-access_log" common
@@ -12,10 +12,8 @@
 	ErrorDocument 404 "La page demandee n'existe pas"
 	ErrorDocument 401 "Nop"
 
-    <Directory "/var/www/oauthGithub">
-        AllowOverride None
-        Order Allow,Deny
-        Allow from All
-    </Directory>
+	<Location />
+		Require all granted
+	</Location>
 
 </VirtualHost>
