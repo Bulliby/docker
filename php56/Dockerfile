@@ -28,6 +28,8 @@ RUN gpg --recv-keys C2BF0BC433CFC8B3
 
 RUN makepkg
 
+RUN pacman -U --noconfirm php56-5.6.40-1-x86_64.pkg.tar.xz
+
 USER root
 
 EXPOSE 80
