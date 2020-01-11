@@ -26,8 +26,14 @@ USER aur
 
 RUN makepkg
 
-USER root
+RUN pacman -U --noconfirm php56-5.6.40-1-x86_64.pkg.tar.xz php56-apache-5.6.40-1-x86_64.pkg.tar.xz
+
+RUN pacman -S --noconfirm vim
+
+COPY httpd.conf /etc/httpd/conf/httpd.conf
 
 EXPOSE 80
+
+RUN echo "<?php echo 'Hello World' . PHP_EOL;" > /srv/http/index.php
 
 CMD apachectl -D FOREGROUND

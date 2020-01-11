@@ -30,6 +30,14 @@ RUN makepkg
 
 USER root
 
+RUN pacman -U --noconfirm php53-5.3.29-x86_64.pkg.tar.xz php53-apache-5.3.29-x86_64.pkg.tar.xz
+
+RUN pacman -S --noconfirm vim
+
+COPY httpd.conf /etc/httpd/conf/httpd.conf
+
 EXPOSE 80
+
+RUN echo "<?php echo 'Hello World' . PHP_EOL;" > /srv/http/index.php
 
 CMD apachectl -D FOREGROUND
