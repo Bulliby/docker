@@ -4,13 +4,17 @@ RUN useradd "aur" -ms /bin/bash
 
 COPY mirrorlist /etc/pacman.d/mirrorlist
 
-RUN pacman -Syyu --noconfirm git
+RUN pacman -Syyu --noconfirm wget
 
 WORKDIR /home/aur
 
-RUN git clone --branch packages/php  --single-branch https://git.archlinux.org/svntogit/packages.git php73
+RUN wget "https://aur.archlinux.org/cgit/aur.git/snapshot/php73.tar.gz"
 
-WORKDIR  /home/aur/php73/repos/extra-x86_64
+RUN pacman -S --noconfirm tar
+
+RUN tar -xf php73.tar.gz
+
+WORKDIR  /home/aur/php73
 
 RUN chown -R aur:aur . 
 
@@ -26,7 +30,7 @@ RUN makepkg --nocheck
 
 USER root
 
-RUN pacman -U --noconfirm php-7.3*.pkg.tar.xz php-apache*.pkg.tar.xz
+RUN pacman -U --noconfirm php73-7.3*.pkg.tar.xz php73-apache*.pkg.tar.xz
 
 RUN pacman -Syyu --noconfirm vim
 
