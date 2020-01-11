@@ -54,4 +54,6 @@ ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
 EXPOSE 80
 
+RUN echo "<?php echo 'Hello World' . PHP_EOL;" > /srv/http/index.php
+
 CMD apachectl -D FOREGROUND
