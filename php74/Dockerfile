@@ -46,6 +46,11 @@ RUN echo 'AddHandler php7-script php' >> /etc/httpd/conf/httpd.conf
 
 RUN echo 'Include conf/extra/php7_module.conf' >> /etc/httpd/conf/httpd.conf
 
+RUN echo 'LoadModule rewrite_module modules/mod_rewrite.so' >> /etc/httpd/conf/httpd.conf
+
+RUN echo 'extension=pdo_mysql' >> /etc/php/php.ini
+RUN echo 'extension=mysqli' >> /etc/php/php.ini
+
 ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
 EXPOSE 80
