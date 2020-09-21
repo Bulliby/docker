@@ -1,34 +1,8 @@
 FROM archlinux/base
 
-RUN useradd "aur" -ms /bin/bash
-
 COPY mirrorlist /etc/pacman.d/mirrorlist
 
-RUN pacman -Syyu --noconfirm git
-
-WORKDIR /home/aur
-
-RUN git clone --branch packages/php  --single-branch https://git.archlinux.org/svntogit/packages.git php74
-
-WORKDIR  /home/aur/php74/repos/extra-x86_64
-
-RUN chown -R aur:aur . 
-
-RUN pacman -Syyu --noconfirm base-devel
-
-RUN pacman -Syyu  --noconfirm apache aspell c-client enchant gd libsodium libxslt libzip net-snmp postgresql-libs tidy unixodbc postfix freetds libnsl oniguruma
-
-USER aur
-
-RUN gpg --recv-keys 910DEB46F53EA312
-
-RUN makepkg --nocheck
-
-USER root
-
-RUN pacman -U --noconfirm php-7.4*.pkg.tar.xz php-apache*.pkg.tar.xz
-
-RUN pacman -Syyu --noconfirm vim
+RUN pacman -Syyu --noconfirm git php php-apache vim
 
 WORKDIR  /etc/httpd/conf
 
