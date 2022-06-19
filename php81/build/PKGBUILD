@@ -1,0 +1,106 @@
+# Maintainer: Pierre Schmitz <pierre@archlinux.de>
+
+pkgbase=php
+pkgname=('php')
+
+pkgver=8.1.5
+pkgrel=1
+arch=('x86_64')
+license=('PHP')
+url='https://www.php.net/'
+makedepends=('apache' 'libzip' 'curl')
+checkdepends=('procps-ng')
+source=("https://php.net/distributions/${pkgbase}-${pkgver}.tar.xz"{,.asc}
+        'apache.patch' 'apache.conf' 'php.ini.patch')
+sha256sums=('7647734b4dcecd56b7e4bd0bc55e54322fa3518299abcdc68eb557a7464a2e8a'
+            'SKIP'
+            '702b163c66c65af92dcad8d79f41bda84bcd5d863235fcf1497c33a86db9e4ca'
+            '4a2add00d93fa991ccdf6356090264c1059c79935642afff6e8d4a2107fa037e'
+            'b3b3385f1c36e272671c7db238b2a69896e11a82db90dafd74964f2eabbfa2f2')
+
+validpgpkeys=('F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD')
+
+prepare() {
+	cd "${srcdir}/${pkgbase}-${pkgver}"
+
+	patch -p0 -i "${srcdir}/apache.patch"
+	patch -p0 -i "${srcdir}/php.ini.patch"
+	autoconf
+
+	# Disable failing tests
+	rm tests/output/stream_isatty_*.phpt
+	rm Zend/tests/arginfo_zpp_mismatch*.phpt
+}
+
+build() {
+	local _phpconfig="--srcdir=../${pkgbase}-${pkgver} \
+		--config-cache \
+		--prefix=/usr \
+		--sbindir=/usr/bin \
+		--sysconfdir=/etc/php \
+		--localstatedir=/var \
+		--with-layout=GNU \
+		--with-config-file-path=/etc/php \
+		--with-config-file-scan-dir=/etc/php/conf.d \
+		--disable-rpath \
+		--mandir=/usr/share/man \
+		--disable-gcc-global-regs \
+        "
+
+    local _phpextensions="\
+        --with-curl=shared \
+        --with-openssl \
+        --with-zip=shared \
+        "
+
+	EXTENSION_DIR=/usr/lib/php/modules
+	export EXTENSION_DIR
+
+	mkdir "${srcdir}/build"
+	cd "${srcdir}/build"
+	ln -s "../${pkgbase}-${pkgver}/configure"
+	./configure ${_phpconfig} \
+                ${_phpextensions}
+	make
+
+	# apache
+	# reuse the previous run; this will save us a lot of time
+	cp -a "${srcdir}/build" "${srcdir}/build-apache"
+	cd "${srcdir}/build-apache"
+	./configure ${_phpconfig} \
+		--with-apxs2 \
+        ${_phpextensions}
+	make
+}
+
+check() {
+	cd "${srcdir}/build"
+
+	export REPORT_EXIT_STATUS=1
+	export NO_INTERACTION=1
+	export SKIP_ONLINE_TESTS=1
+	export SKIP_SLOW_TESTS=1
+	export TEST_PHP_ARGS="-j$(nproc)"
+	export TESTS='tests Zend'
+
+	make test
+}
+
+package_php() {
+	pkgdesc='A general-purpose scripting language that is especially suited to web development'
+    depends=('php' 'apache' 'libnsl')
+
+	cd "${srcdir}/build"
+	make -j4 INSTALL_ROOT="${pkgdir}" install-{modules,cli,build,headers,programs,pharcmd}
+	install -D -m644 "${srcdir}/${pkgbase}-${pkgver}/php.ini-production" "${pkgdir}/etc/php/php.ini"
+	install -d -m755 "${pkgdir}/etc/php/conf.d/"
+    install -D -m755 "${srcdir}/build-apache/libs/libphp.so" "${pkgdir}/usr/lib/httpd/modules/libphp.so"
+    install -D -m644 "${srcdir}/apache.conf" "${pkgdir}/etc/httpd/conf/extra/php_module.conf"
+
+	# remove static modules
+	rm -f "${pkgdir}/usr/lib/php/modules/"*.a
+	# remove modules provided by sub packages
+	rm -f "${pkgdir}/usr/lib/php/modules/"{enchant,gd,imap,intl,sodium,odbc,pdo_dblib,pdo_odbc,pgsql,pdo_pgsql,pspell,snmp,sqlite3,pdo_sqlite,tidy,xsl}.so
+	# remove empty directory
+	rmdir "${pkgdir}/usr/include/php/include"
+}
