@@ -1,4 +1,4 @@
-# oauthGithub
+# oauthGithub8
 
 This application permit to request an api token on fully fronted app without **expose** your CLIENT_ID and CLIENT_SECRET by acting like a **proxy**.
 
@@ -13,7 +13,7 @@ You can find the sources here : [oauth](https://github.com/Bulliby/oauthGithub)
 You can use the docker hub image here : [dockerhub](https://hub.docker.com/r/waxer/oauth_github)
 
 ```shell
-docker run --name oauth_github --env DEV_CLIENT_SECRET="client secret" --env  DEV_GIT_GRAPH_URL="http://gitgraph" --env DEV_CLIENT_ID="client id"  -d -p 23000:80 waxer/oauth_github:v1
+docker run --name gitgraph --restart=unless-stopped --env CLIENT_SECRET="*******" --env  CALLBACK_URL="http://client.gitgraph.com"  --env CLIENT_ID="*****"  -v /home/waxer/dev/PHP/oauthGitgraph:/srv/http -d -p 23000:80 oauth_github
 ```
 
 There is six **environment variable** available :
