@@ -40,4 +40,6 @@ RUN echo 'Include conf/extra/php_module.conf' >> /etc/httpd/conf/httpd.conf
 
 RUN rm -rf /home/aur
 
+ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
+
 CMD apachectl -D FOREGROUND
