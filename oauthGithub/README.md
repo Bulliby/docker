@@ -20,7 +20,7 @@ docker run --name gitgraph --restart=unless-stopped --env CLIENT_SECRET="****" -
 
 Create a GitHub **OAuth** app in the settings of your **profile**. Put the homepage and callback url of your application. In return get your Client ID and Client secret and use it in `docker run` cmd like above.
 
-Follow this repository to find how a create an **app** who us the docker's environnement variables [oauthGitgraph](https://github.com/Bulliby/oauthGitgraph)
+Follow this repository to find how a create an **app** who us the docker's environment variables [oauthGitgraph](https://github.com/Bulliby/oauthGitgraph)
 
 ## Notes
 
