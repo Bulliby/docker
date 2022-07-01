@@ -13,7 +13,7 @@ The image is available on **dockerhub** : [here](https://hub.docker.com/r/waxer/
 You can find the sources of the **php app** : [here](https://github.com/Bulliby/oauthGithub)
 
 ```shell
-docker run --name gitgraph --restart=unless-stopped --env CLIENT_SECRET="****" --env  CALLBACK_URL="https://gitgraph.wellsguillaume.fr"  --env CLIENT_ID="****"  --ip 172.17.0.3 -v /home/waxer/dev/oauthGitgraph:/srv/http -d -p 127.0.0.1:23000:80 waxer/gitgraph:v1
+docker run --name gitgraph --restart=unless-stopped --env CLIENT_SECRET="****" --env  CALLBACK_URL="https://gitgraph.wellsguillaume.fr"  --env CLIENT_ID="****"  --ip 172.17.0.3 -v /home/waxer/dev/oauthGitgraph:/srv/http -d -p 127.0.0.1:23000:80 waxer/gitgraph:php8.1
 ```
 
 ## Usage
