@@ -1,0 +1,21 @@
+--- php.ini-production
++++ php.ini-production
+@@ -920,15 +920,15 @@
+ ;extension=gd
+ ;extension=gettext
+ ;extension=gmp
+-;extension=iconv
++extension=iconv
+ ;extension=imap
+-;extension=intl
++extension=intl
+ ;extension=ldap
+ ;extension=mysqli
+ ;extension=odbc
+ ;zend_extension=opcache
+ ;extension=pdo_dblib
+-;extension=pdo_mysql
++extension=pdo_mysql
+ ;extension=pdo_odbc
+ ;extension=pdo_pgsql
+ ;extension=pdo_sqlite

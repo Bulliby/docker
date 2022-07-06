@@ -6,17 +6,15 @@ COPY mirrorlist /etc/pacman.d/mirrorlist
 
 WORKDIR /home/aur
 
-ADD build/* /home/aur/
+RUN pacman -Syyu --noconfirm apache curl libzip base-devel
+
+ADD build /home/aur/
 
 RUN chown -R aur:aur . 
 
-RUN pacman -Syyu --noconfirm apache curl libzip base-devel
-
 USER aur
 
-RUN gpg --recv-keys F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD
-
-RUN makepkg 
+RUN makepkg -d --skipinteg --nocheck
 
 USER root
 
