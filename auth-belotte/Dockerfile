@@ -1,5 +1,8 @@
 FROM archlinux:base
 
+# First to be --uid 1000
+RUN useradd "www-owner" -ms /bin/bash
+
 RUN useradd "aur" -ms /bin/bash
 
 COPY mirrorlist /etc/pacman.d/mirrorlist
@@ -20,7 +23,7 @@ USER root
 
 RUN pacman -U --noconfirm php-8.1.*.pkg.tar.zst
 
-RUN pacman -S --noconfirm vim composer
+RUN pacman -S --noconfirm vim composer git
 
 RUN curl -o symfony.tar.gz -L --max-redirs 1 https://github.com/symfony-cli/symfony-cli/releases/download/v5.4.11/symfony-cli_linux_amd64.tar.gz
 
@@ -47,5 +50,7 @@ RUN rm -rf /home/aur
 ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
 WORKDIR /srv/http
+
+USER www-owner
 
 CMD apachectl -D FOREGROUND
