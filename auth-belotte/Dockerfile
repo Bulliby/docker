@@ -51,6 +51,4 @@ ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
 WORKDIR /srv/http
 
-USER www-owner
-
 CMD apachectl -D FOREGROUND
