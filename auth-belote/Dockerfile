@@ -1,6 +1,7 @@
 FROM archlinux:base
 
-# First to be --uid 1000
+# First to be --uid 1000 / This is the standard user to interact with files
+# in host and guest
 RUN useradd "www-owner" -ms /bin/bash
 
 RUN useradd "aur" -ms /bin/bash
