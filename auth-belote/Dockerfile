@@ -52,4 +52,8 @@ ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
 WORKDIR /srv/http
 
+RUN pacman -S --noconfirm xdebug
+
+ADD conf/xdebug.ini /etc/php/conf.d/xdebug.ini
+
 CMD apachectl -D FOREGROUND
