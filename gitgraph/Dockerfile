@@ -1,5 +1,7 @@
 FROM archlinux:base
 
+RUN useradd "www-owner" --uid 777 -ms /bin/bash
+
 RUN useradd "aur" -ms /bin/bash
 
 COPY mirrorlist /etc/pacman.d/mirrorlist
@@ -22,7 +24,7 @@ RUN pacman -U --noconfirm php-8.1.*.pkg.tar.zst
 
 RUN pacman -S --noconfirm vim composer
 
-WORKDIR  /etc/httpd/conf
+WORKDIR /etc/httpd/conf
 
 RUN sed -i 's|#Include conf/extra/httpd-vhosts.conf|Include conf/extra/httpd-vhosts.conf|' /etc/httpd/conf/httpd.conf
 
@@ -39,5 +41,9 @@ RUN echo 'Include conf/extra/php_module.conf' >> /etc/httpd/conf/httpd.conf
 RUN rm -rf /home/aur
 
 ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
+
+WORKDIR /srv/http
+
+RUN sed -i 's/variables_order = \"GPCS\"//' /etc/php/php.ini
 
 CMD apachectl -D FOREGROUND
