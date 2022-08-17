@@ -12,7 +12,7 @@
 ## Starting a new project :
 
 ```shell
-docker exec -it belotte-docker-auth-1 su www-owner -c 'symfony new . --version="6.1.*" --webapp'
 docker exec -it belotte-docker-auth-1 su www-owner -c 'git config --global user.email "mailhere@gmail.com"'
 docker exec -it belotte-docker-auth-1 su www-owner -c 'git config --global user.name "Firstname Lastname"'
+docker exec -it belotte-docker-auth-1 su www-owner -c 'symfony new . --version="6.1.*" --webapp'
 ```
