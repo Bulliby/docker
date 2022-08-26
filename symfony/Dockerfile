@@ -1,6 +1,6 @@
 FROM waxer/php:8.1
 
-RUN pacman -Syyu --noconfirm php-intl git
+RUN pacman -Syyu --noconfirm php-intl git composer
 
 WORKDIR /home/www-owner
 
