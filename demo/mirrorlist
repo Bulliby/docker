@@ -1,0 +1,7 @@
+##
+## Arch Linux repository mirrorlist
+## Generated on 2019-08-17
+##
+
+## France
+Server = http://mir.archlinux.fr/$repo/os/$arch
