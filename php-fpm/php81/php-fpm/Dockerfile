@@ -68,4 +68,6 @@ RUN pacman -U php81-8* php81-fpm* --noconfirm
 
 RUN pacman -Rs --noconfirm $BUILD_DEP c-client
 
+RUN pacman -Syyu --noconfirm composer
+
 CMD ["php-fpm81", "-F"]
