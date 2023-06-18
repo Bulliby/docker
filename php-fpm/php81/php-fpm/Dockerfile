@@ -1,7 +1,7 @@
 FROM archlinux:base
 
 # ID 1000
-RUN useradd "www-owner" -s /bin/bash
+RUN useradd "www-owner" -ms /bin/bash
 
 RUN useradd "aur" -ms /bin/bash
 
@@ -69,5 +69,7 @@ RUN pacman -U php81-8* php81-fpm* --noconfirm
 RUN pacman -Rs --noconfirm $BUILD_DEP c-client
 
 RUN pacman -Syyu --noconfirm composer
+
+RUN rm /etc/php81/php-fpm.d/www.conf
 
 CMD ["php-fpm81", "-F"]
