@@ -15,7 +15,8 @@ RUN  pacman --noconfirm -U  \
                 php81-tokenizer-*x86_64.pkg.tar.zst \
                 php81-xml-*x86_64.pkg.tar.zst \
                 php81-xmlwriter-*x86_64.pkg.tar.zst \
-                php81-mysql-*x86_64.pkg.tar.zst
+                php81-mysql-*x86_64.pkg.tar.zst \
+                php81-simplexml-*x86_64.pkg.tar.zst
 
 COPY belote.conf /etc/php81/php-fpm.d/belote.conf
 
