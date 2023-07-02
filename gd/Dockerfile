@@ -1,6 +1,6 @@
-FROM waxer/php8.1
+FROM waxer/php
 
-RUN pacman -Syyu --noconfirm php-gd
+RUN pacman -Syyu --noconfirm php-gd diffutils
 
 RUN sed -i 's|;extension=gd|extension=gd|' /etc/php/php.ini
 

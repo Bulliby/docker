@@ -1,4 +1,4 @@
-FROM waxer/php8.1 AS prod
+FROM waxer/php AS prod
 
 WORKDIR /srv/http
 

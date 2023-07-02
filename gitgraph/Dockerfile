@@ -1,4 +1,4 @@
-FROM waxer/php:8.1
+FROM waxer/php
 
 ADD conf/vhost.conf /etc/httpd/conf/extra/httpd-vhosts.conf
 
